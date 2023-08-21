@@ -1,5 +1,5 @@
 # Dynamic-Indices-cluster
-Bigdata Clustering with Blanace Sheet and Stocks
+Bigdata Clustering with Balance Sheet and Stocks
 
 # Stacks Used
 ![AWS](https://img.shields.io/badge/AWS-232F3E?logo=amazon-aws&logoColor=white)
