@@ -6,6 +6,7 @@ from alpha_vantage.timeseries import TimeSeries
 
 def fetch_apple_price():
     apple = yf.Ticker("AAPL")
+    financials = apple.financials
     data = apple.history(period="1d")
     # 여기서 DB에 데이터를 저장하는 코드를 작성하시면 됩니다.
 
