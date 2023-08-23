@@ -2,14 +2,14 @@ import requests
 import pandas as pd
 from sqlalchemy import create_engine
 from time import sleep
-import pymysql
+from config import Config, Lake
 
-db_type = 'mysql+pymysql'
-host = 'outsider-mysql.czxgnu6kme38.ap-northeast-2.rds.amazonaws.com'
-port = '3306'
-database = 'tmp'
-username = 'admin'
-password = 'qwer1234'
+db_type=Config['db_type']
+username=Config['username']
+password=Config['password']
+host=Config['host']
+port=Config['port']
+database=Lake['database1']
 
 cnt = 10
 
