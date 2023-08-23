@@ -1,3 +1,5 @@
 tmp.*
 config.py
+__pycache__/
+*.pptx
 

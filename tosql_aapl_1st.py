@@ -11,8 +11,6 @@ host=Config['host']
 port=Config['port']
 database=Lake['database1']
 
-cnt = 10
-
 # 데이터베이스 연결 엔진 생성
 engine = create_engine(f'{db_type}://{username}:{password}@{host}:{port}/{database}')
 def fetch_balance_sheet():
