@@ -32,7 +32,9 @@ for tt in ran:
     volumep = period['Volume']
     #divip = period['Dividends']
     #splitsp = period['Stock Splits']
-    mergep = pd.concat([date, volumep, highp, lowp, openp, closep], axis=1)#, divip, splitsp)
+    ###mergep = pd.concat([date, volumep, highp, lowp, openp, closep], axis=1)#, divip, splitsp)
+    adjclosep = period['Adj Volume']
+    mergep = pd.concat([date, volumep, highp, lowp, openp, closep, adjclosep], axis=1)#, divip, splitsp)
     print(mergep)
     ###print(period)
     #print(company_indexing)
