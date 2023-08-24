@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="7cfd484f-7117-47d1-9f28-03da2cd19603" name="@aws-rdb Mapping">
+      <data-sources db="5872db8c-7dc2-4ad6-ae3c-09720d7f72ce" />
+    </mapping>
+  </component>
+</project>
