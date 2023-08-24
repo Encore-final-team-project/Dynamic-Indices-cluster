@@ -22,7 +22,7 @@ for tt in ran:
     company_indexing = company[tt]
     ##ticker = yf.Ticker(company_indexing)
     period = yf.download(company_indexing, interval='1m', period='1d')
-    print(period)
+    #print(period)
     date = period.index
     date= date.to_frame()
     openp = period['Open']
