@@ -18,6 +18,7 @@ company = cdf['ticker']
 ran = company.index
 sorted_stock = pd.DataFrame()
 
+def testRealTimeStock():
 for tt in ran:
     company_indexing = company[tt]
     ##ticker = yf.Ticker(company_indexing)
@@ -31,7 +32,12 @@ for tt in ran:
     closep = period['Close']
     volumep = period['Volume']
     #divip = period['Dividends']
-    #splitsp = period['Stock Splits']
+    #splitsp = per File "src/main/python/df_stock.py", line 1, in <module>
+    import pandas as pd
+ImportError: No module named pandas
+] with root cause
+
+org.python.core.PyException: ImportError: No module named pandasiod['Stock Splits']
     ###mergep = pd.concat([date, volumep, highp, lowp, openp, closep], axis=1)#, divip, splitsp)
     adjclosep = period['Adj Volume']
     mergep = pd.concat([date, volumep, highp, lowp, openp, closep, adjclosep], axis=1)#, divip, splitsp)
