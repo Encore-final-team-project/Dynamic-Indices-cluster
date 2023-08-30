@@ -1,0 +1,6 @@
+tmp.*
+config.py
+__pycache__/
+*.pptx
+final_ppt/
+
