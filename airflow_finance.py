@@ -59,11 +59,12 @@ IS_dag1 = BashOperator(
 )
 
 # Dag 2
+def run_bs_script():
+    bs.main()    # cf.py 파일 내의 main 함수 실행하기
+
 BS_dag2 = BashOperator(
     task_id='Balance_Sheet_db_edit',
-    bash_command="""
-        echo "python3 bs.py"
-        """,
+    python_callable = run_bs_script,
     dag=dag
 )
 
