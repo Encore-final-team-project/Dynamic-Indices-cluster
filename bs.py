@@ -69,10 +69,14 @@ def delete_data():
 # Insert 하기 전, 기존 데이터는 Delete
 delete_data()
 
-# Operate
-for symbol in symbols:
-    try:
-        store_data(symbol, fetching(symbol))
-    except Exception as e:
-        print(f"Error for symbol {symbol}: {str(e)}")
-        continue
+def main():
+    # Operate
+    for symbol in symbols:
+        try:
+            store_data(symbol, fetching(symbol))
+        except Exception as e:
+            print(f"Error for symbol {symbol}: {str(e)}")
+            continue
+
+if __name__ == "__main__":
+    main()
