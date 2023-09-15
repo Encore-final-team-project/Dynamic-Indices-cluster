@@ -1,18 +1,24 @@
 import pendulum
+import bs
+import cf
+import fs
+import balance_sheet
+import cash_flow
+import income_statement
 from airflow import DAG
 from datetime import datetime, timedelta
-from airflow.operators.bash import BashOperator
+# from airflow.operators.bash import BashOperator
 from airflow.operators.dummy import DummyOperator
-# from airflow.operators.python_operator import PythonOperator
+from airflow.operators.python_operator import PythonOperator
 
 local_tz = pendulum.timezone("Asia/Seoul")
 
 default_args = {
     'owner': 'outsider',
     'depends_on_past': True,
-    'start_date': datetime(year=2023, month=9, day=15, hour=0, minute=0, tzinfo=local_tz),
+    'start_date': datetime(year=2022, month=12, day=25, hour=0, minute=0, tzinfo=local_tz),
     'retries': 3,
-    'retry_delay': timedelta(minutes=1)
+    'retry_delay': timedelta(minutes=10)
 }
 
 dag = DAG(
@@ -61,11 +67,12 @@ BS_dag2 = BashOperator(
     dag=dag
 )
 
-CF_dag2 = BashOperator(
+def run_cf_script():
+    cf.main()    # cf.py 파일 내의 main 함수 실행하기
+
+CF_dag2 = PythonOperator(
     task_id='Cash_Flow_db_edit',
-    bash_command="""
-        echo "python3 cf.py"
-        """,
+    python_callable = run_cf_script,
     dag=dag
 )
 
