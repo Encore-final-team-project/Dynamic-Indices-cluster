@@ -20,26 +20,29 @@ engine = create_engine(f'{db_type}://{username}:{password}@{host}:{port}/{databa
 
 symbols = Symbols()
 
-# symbol 리스트를 통해 finance DB에 data 적재
-for symbol in symbols:
-    data_yf = yf.Ticker(symbol).balance_sheet
+def main():
+    # symbol 리스트를 통해 finance DB에 data 적재
+    for symbol in symbols:
+        data_yf = yf.Ticker(symbol).balance_sheet
 
-    if data_yf is None or data_yf.empty:
-        print(f"No data available for symbol: {symbol}. Skipping...")
-        continue
+        if data_yf is None or data_yf.empty:
+            print(f"No data available for symbol: {symbol}. Skipping...")
+            continue
 
-    data_df = pd.DataFrame(data_yf)
-    bs = data_df.transpose()    # balance sheet (dataframe) 완성
+        data_df = pd.DataFrame(data_yf)
+        bs = data_df.transpose()    # balance sheet (dataframe) 완성
 
-    bs['Symbol'] = symbol     # Symbol 붙여주기
+        bs['Symbol'] = symbol     # Symbol 붙여주기
 
-    table_name = f'{symbol}_balance_sheet'
+        table_name = f'{symbol}_balance_sheet'
 
-    try:
-        # MySQL 테이블이 이미 존재하는 경우 덮어쓰기
-        bs.to_sql(name=table_name, con=engine, if_exists='replace', index=True)
-        print(symbol, ' complete!')
-    except Exception as e:
-        print(f"Error for symbol {symbol}: {str(e)}")
-        continue  # 오류가 발생한 경우 다음 symbol로 넘어가기
+        try:
+            # MySQL 테이블이 이미 존재하는 경우 덮어쓰기
+            bs.to_sql(name=table_name, con=engine, if_exists='append', index=True)
+            print(symbol, ' complete!')
+        except Exception as e:
+            print(f"Error for symbol {symbol}: {str(e)}")
+            continue  # 오류가 발생한 경우 다음 symbol로 넘어가기
 
+if __name__ == "__main__":
+    main()
