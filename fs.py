@@ -23,7 +23,7 @@ def fetching(symbol):   # Symbol 값을 입력받아서 필요한 행만 SELECT
     try:
         with conn.cursor() as curs:  # 커서 생성
             string = f'''
-              SELECT
+              SELECT DISTINCT
                 Symbol,
                 `index` as indexDate,
                 `Total Revenue` as `Revenue`,

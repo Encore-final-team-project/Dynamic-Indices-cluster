@@ -34,27 +34,30 @@ dag = DAG(
 )
 
 # Dag 1
-BS_dag1 = BashOperator(
+def run_bs_1():
+    balance_sheet.main()
+
+BS_dag1 = PythonOperator(
     task_id='Balance_Sheet_yf_to_db',
-    bash_command="""
-        echo "python3 balance_sheet.py"
-        """,
+    python_callable = run_bs_1,
     dag=dag
 )
 
-CF_dag1 = BashOperator(
+def run_cf_1():
+    cash_flow.main()
+
+CF_dag1 = PythonOperator(
     task_id='Cash_Flow_yf_to_db',
-    bash_command="""
-        echo "python3 cash_flow.py"
-        """,
+    python_callable = run_cf_1,
     dag=dag
 )
 
-IS_dag1 = BashOperator(
+def run_fs_1():
+    income_statement.main()
+
+IS_dag1 = PythonOperator(
     task_id='Income_Statement_yf_to_db',
-    bash_command="""
-        echo "python3 income_statement.py"
-        """,
+    python_callable = run_fs_1,
     dag=dag
 )
 
@@ -62,7 +65,7 @@ IS_dag1 = BashOperator(
 def run_bs_script():
     bs.main()    # bs.py 파일 내의 main 함수 실행하기
 
-BS_dag2 = BashOperator(
+BS_dag2 = PythonOperator(
     task_id='Balance_Sheet_db_edit',
     python_callable = run_bs_script,
     dag=dag
@@ -80,7 +83,7 @@ CF_dag2 = PythonOperator(
 def run_fs_script():
     fs.main()    # fs.py 파일 내의 main 함수 실행하기
 
-IS_dag2 = BashOperator(
+IS_dag2 = PythonOperator(
     task_id='Income_Statement_db_edit',
     python_callable = run_fs_script,
     dag=dag
