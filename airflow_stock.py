@@ -11,7 +11,7 @@ local_tz = pendulum.timezone("Asia/Seoul")
 default_args = {
     'owner': 'outsider',
     'depends_on_past': True,
-    'start_date': datetime(year=2023, month=9, day=15, hour=6, minute=0, tzinfo=local_tz),
+    'start_date': datetime(year=2023, month=8, day=15, hour=6, minute=0, tzinfo=local_tz),
     'retries': 2,
     'retry_delay': timedelta(minutes=1)
 }

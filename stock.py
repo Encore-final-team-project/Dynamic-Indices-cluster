@@ -1,6 +1,7 @@
 import yfinance as yf
 import pandas as pd
 import pymysql
+from datetime import datetime, timedelta
 from sqlalchemy import create_engine
 from config import Config, Lake
 from SymbolList import Symbols
@@ -16,21 +17,37 @@ database3 = Lake['database3']
 
 symbols = Symbols()
 
-def main():
-    # yfinance로 정보 수집 및 데이터베이스에 저장
+# 각 회사의 주가 정보 가져오기
+def fetch_stock_data():
+    end_date = datetime.today()
+    start_date = end_date - timedelta(days=1)
+
+    all_data = []
+
     for symbol in symbols:
         try:
             stock = yf.Ticker(symbol)
-            info = stock.info
-            name = info['shortName']
-            long_business_summary = info.get('longBusinessSummary', '')
+            hist = stock.history(start=start_date, end=end_date)
 
-            with engine.connect() as conn:
-                conn.execute(company_info.insert().values(symbol=symbol, name=name, longBusinessSummary=long_business_summary))
-                conn.commit()  # 트랜잭션 커밋
+            # 등락률 계산
+            hist['Change'] = hist['Close'].pct_change() * 100
+            hist['Symbol'] = symbol
+            all_data.append(hist)
         except Exception as e:
-            print(f"An error occurred while inserting data for {symbol}: {e}")
+            print(f"Error fetching data for {symbol}: {e}")
+
+    final_data = pd.concat(all_data)
+    return final_data
+
+# 데이터베이스에 데이터 저장
+def save_to_db():
+    engine = create_engine(f'{db_type}://{username}:{password}@{host}:{port}/{database3}')
+    data = fetch_stock_data()
+    data.reset_index(inplace=True)
+    data.to_sql('stock_data', engine, if_exists='append', index=False)
+
+def main():
+    save_to_db()
 
 if __name__ == "__main__":
     main()
-
