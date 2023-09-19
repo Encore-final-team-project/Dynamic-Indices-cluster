@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
+from backfill_stock import fetch_and_store_data
 
 default_args = {
     'owner': 'outsider',
@@ -11,10 +12,6 @@ default_args = {
     'retries': 1,
     'retry_delay': timedelta(minutes=5)
 }
-def fetch_and_store_data(execution_date):
-    # 주어진 execution_date 기준으로 시작/종료 날짜 계산
-    end_date = execution_date
-    start_date = end_date - timedelta(days=30)
 
 dag = DAG(
     dag_id = 'sp500_backfill',
@@ -28,7 +25,7 @@ dag = DAG(
 t1 = PythonOperator(
     task_id='fetch_and_store_MissingData',
     python_callable=fetch_and_store_data,
-    op_args=[{{ ds }}],  # ds는 Airflow의 내장 Jinja template 변수로 execution_date를 문자열로 반환합니다.
+    provide_context=True,
     dag=dag,
 )
 if __name__ == "__main__":
