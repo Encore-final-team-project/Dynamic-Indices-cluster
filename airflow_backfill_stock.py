@@ -18,8 +18,8 @@ dag = DAG(
     default_args = default_args,
     description = 'Fetch S&P 500 stock data and store in DB',
     schedule_interval=timedelta(days=1),
-    start_date=datetime(2023, 8, 15),
-    end_date=datetime(2023, 12, 31),
+    start_date=datetime(2023, 5, 15),
+    end_date=datetime(2023, 5, 16),
     catchup=True
 )
 t1 = PythonOperator(
@@ -30,3 +30,4 @@ t1 = PythonOperator(
 )
 if __name__ == "__main__":
     dag.cli()
+
