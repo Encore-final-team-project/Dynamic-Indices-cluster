@@ -66,10 +66,10 @@ def delete_data():
     finally:
         conn.close()
 
-# Insert 하기 전, 기존 데이터는 Delete
-delete_data()
-
 def main():
+    # Insert 하기 전, 기존 데이터는 Delete
+    delete_data()
+
     # Operate
     for symbol in symbols:
         try:
@@ -80,3 +80,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+

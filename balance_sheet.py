@@ -15,12 +15,12 @@ database1 = Lake['database1']
 database2 = Lake['database2']
 database3 = Lake['database3']
 
-# finance DB 연결 엔진 (create는 finance에서)
-engine = create_engine(f'{db_type}://{username}:{password}@{host}:{port}/{database1}')
-
-symbols = Symbols()
-
 def main():
+    # finance DB 연결 엔진 (create는 finance에서)
+    engine = create_engine(f'{db_type}://{username}:{password}@{host}:{port}/{database1}')
+
+    symbols = Symbols()
+
     # symbol 리스트를 통해 finance DB에 data 적재
     for symbol in symbols:
         data_yf = yf.Ticker(symbol).balance_sheet

@@ -17,8 +17,8 @@ default_args = {
     'owner': 'outsider',
     'depends_on_past': True,
     'start_date': datetime(year=2022, month=12, day=25, hour=0, minute=0, tzinfo=local_tz),
-    'retries': 3,
-    'retry_delay': timedelta(minutes=10)
+    'retries': 1,
+    'retry_delay': timedelta(minutes=5)
 }
 
 dag = DAG(
@@ -27,7 +27,7 @@ dag = DAG(
     tags = ['spark', 'outsider'],
     max_active_runs = 1,
     concurrency = 10,
-    schedule_interval = None,       # 1년에 한 번씩 실행하기
+    schedule_interval = timedelta(days=365),
     # user_defined_macros={'local_dt': lambda execution_date: execution_date.in_timezone(local_tz).strftime("%Y-%m-%d %H:%M:%S")},
     catchup=False,
     default_args = default_args
@@ -105,3 +105,4 @@ mid_task = DummyOperator(task_id="mid", dag=dag)
 # WF
 start_task >> BS_dag1 >> CF_dag1 >> IS_dag1 >> mid_task
 mid_task >> BS_dag2 >> CF_dag2 >> IS_dag2 >> end_task
+

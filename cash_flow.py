@@ -37,9 +37,13 @@ def main():
 
         table_name = f'{symbol}_cash_flow'
 
-        # MySQL 테이블이 이미 존재하는 경우 덮어쓰기
-        cf.to_sql(name=table_name, con=engine, if_exists='append', index=True)
-        print(symbol, ' complete!')
+        try:
+            # MySQL 테이블이 이미 존재하는 경우 덮어쓰기
+            cf.to_sql(name=table_name, con=engine, if_exists='append', index=True)
+            print(symbol, ' complete!')
+        except Exception as e:
+            print(f"Error for symbol {symbol}: {str(e)}")
+            continue  # 오류가 발생한 경우 다음 symbol로 넘어가기
 
 if __name__ == "__main__":
     main()
